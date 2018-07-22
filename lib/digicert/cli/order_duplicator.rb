@@ -31,7 +31,7 @@ module Digicert
       def apply_output_options(duplicate)
         if duplicate
           print_request_details(duplicate.requests.first)
-          fetch_and_download_certificate(duplicate.id)
+          fetch_and_download_certificate(duplicate.requests.first)
         end
       end
 
@@ -41,19 +41,15 @@ module Digicert
         )
       end
 
-      def fetch_and_download_certificate(duplicate_order_id)
+      def fetch_and_download_certificate(request_id)
         if options[:output]
-          order = fetch_duplicate_order(duplicate_order_id)
-          download_certificate_order(order.certificate.id)
+          certificate = fetch_certificate(request_id)
+          download_certificate_order(certificate.id)
         end
       end
 
-      def fetch_duplicate_order(duplicate_order_id)
-        Digicert::CLI::OrderRetriever.fetch(
-          duplicate_order_id,
-          wait_time: options[:wait_time],
-          number_of_times: options[:number_of_times],
-        )
+      def fetch_certificate(request_id)
+        Digicert::DuplicateCertificateFinder.find_by(request_id: request_id)
       end
 
       def download_certificate_order(certificate_id)
