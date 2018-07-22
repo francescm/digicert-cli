@@ -52,13 +52,13 @@ module Digicert
         Digicert::CLI::OrderRetriever.fetch(
           duplicate_order_id,
           wait_time: options[:wait_time],
-          number_of_times: options[:number_of_times]
+          number_of_times: options[:number_of_times],
         )
       end
 
       def download_certificate_order(certificate_id)
         Digicert::CLI::CertificateDownloader.download(
-          filename: order_id, path: output_path, certificate_id: certificate_id
+          filename: order_id, path: output_path, certificate_id: certificate_id,
         )
       end
     end

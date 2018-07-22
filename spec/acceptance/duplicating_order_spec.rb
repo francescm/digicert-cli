@@ -16,6 +16,7 @@ RSpec.describe "Order duplicating" do
   end
 
   def mock_digicert_order_duplication_message_chain
-    allow(Digicert::CLI::OrderDuplicator).to receive_message_chain(:new, :create)
+    allow(Digicert::CLI::OrderDuplicator).
+      to receive_message_chain(:new, :create)
   end
 end
